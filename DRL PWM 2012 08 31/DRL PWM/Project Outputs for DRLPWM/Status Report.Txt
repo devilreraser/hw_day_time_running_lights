@@ -1,0 +1,12 @@
+Output: NC Drill Files
+Type  : NC Drill
+From  : Project [DRLPWM.PrjPCB]
+   Generated File[DRLPWM.TXT]
+   Generated File[DRLPWM.LDP]
+   Generated File[DRLPWM.DRR]
+
+
+Files Generated   : 3
+Documents Printed : 0
+
+Finished Output Generation At 02:14:35 On 31.8.2012 ã.

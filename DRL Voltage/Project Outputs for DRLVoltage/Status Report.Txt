@@ -1,0 +1,15 @@
+Output: Gerber Files
+Type  : Gerber
+From  : Variant [[No Variations]] of Project [DRLVoltage.PrjPCB]
+   Generated File[DRLVoltage.GTL]
+   Generated File[DRLVoltage.GTS]
+   Generated File[DRLVoltage.GKO]
+   Generated File[DRLVoltage.RUL]
+   Generated File[DRLVoltage.EXTREP]
+   Generated File[DRLVoltage.REP]
+
+
+Files Generated   : 6
+Documents Printed : 0
+
+Finished Output Generation At 14:46:28 On 13.8.2012 ã.

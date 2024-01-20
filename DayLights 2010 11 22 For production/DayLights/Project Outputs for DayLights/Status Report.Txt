@@ -1,0 +1,13 @@
+Output: NC Drill Files
+Type  : NC Drill
+From  : Project [DayLights.PRJPCB]
+   Generated File[Day10F206.TXT]
+   Generated File[Day10F206.DRL]
+   Generated File[Day10F206.LDP]
+   Generated File[Day10F206.DRR]
+
+
+Files Generated   : 4
+Documents Printed : 0
+
+Finished Output Generation At 09:42:08 On 22.11.2010 ã.

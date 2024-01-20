@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: DRL.PCBDOC   27.12.2010 ã.  12:39:51
+---------------------------------------------------------------------------
+
+
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII File : NCDrillOutput.TXT
+EIA File   : NCDrillOutput.DRL
+
+Tool         Hole Size          Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        0.5mm (19.685mil)        121              600.11 mm (23.63 Inch)
+T2        0.6mm (23.622mil)        5                36.21 mm (1.43 Inch)
+T3        1mm (39.37mil)           6                68.86 mm (2.71 Inch)
+T4        1.5mm (59.055mil)        8                191.64 mm (7.54 Inch)
+---------------------------------------------------------------------------
+Totals                             140              896.81 mm (35.31 Inch)
+
+Total Processing Time : 00:00:03

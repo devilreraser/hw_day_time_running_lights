@@ -1,0 +1,15 @@
+Output: Gerber Files
+Type  : Gerber
+From  : Variant [[No Variations]] of Project [DRLDelay.PrjPCB]
+   Generated File[DRLDelay.GTL]
+   Generated File[DRLDelay.GTS]
+   Generated File[DRLDelay.GKO]
+   Generated File[DRLDelay.RUL]
+   Generated File[DRLDelay.EXTREP]
+   Generated File[DRLDelay.REP]
+
+
+Files Generated   : 6
+Documents Printed : 0
+
+Finished Output Generation At 22:17:04 On 16.9.2012 ã.

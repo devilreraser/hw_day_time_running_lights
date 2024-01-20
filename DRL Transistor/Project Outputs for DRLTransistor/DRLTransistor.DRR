@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: DRLTransistor.PcbDoc   2.9.2012 ã.  14:08:30
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : DRLTransistor.TXT
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        1.8mm (70.866mil)        Round          2                9.41 mm (0.37 Inch)
+T2        2mm (78.74mil)           Round          3                20.62 mm (0.81 Inch)
+---------------------------------------------------------------------------
+Totals                                            5                30.02 mm (1.18 Inch)
+
+Total Processing Time (hh:mm:ss) : 00:00:00

@@ -1,0 +1,13 @@
+Bill of Material for 
+On 22.8.2012 ã. at 22:28:43
+
+ Comment             Pattern     Quantity  Components
+------------------------------------------------------------------------------
+ 10uF/6.3V X5R       0805             1    C1                           Capacitor            
+ 12k 1%              0805             1    R2                           Resistor             
+ 4M7 5%              0805             1    R3                           Resistor             
+ 51k 1%              0805             1    R1                           Resistor             
+ AZ431AN-A           SOT-23           1    U1                                                
+ DTA114TKA           sot-23           1    Q1                           PNP Bipolar Transistor 
+ RAS-12-15           RELAY5PIN        2    K1, K2                                            
+ SS54C               SMC              3    D1, D2, D3                   Diode                

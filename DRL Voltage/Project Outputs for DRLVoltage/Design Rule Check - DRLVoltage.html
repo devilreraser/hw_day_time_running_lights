@@ -1,0 +1,648 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : sans-serif;
+			color : white;
+			background-color : #21489e;
+			padding: 0.3em;
+		}
+		body {
+			font-family : verdana;
+		}
+		td, th {
+			padding: 0.5em;
+			text-align : center;
+			width : 18%;
+		}
+		th {
+			background-color : #A6CAF0;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+		}
+		
+		.DRC_summary_header {							
+			padding-bottom : 0.1em;
+			border : 0px solid black;							
+			width: 100%;
+                        align: right;
+                        
+		}
+
+		.DRC_summary_header_col1, 
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3
+		{
+			color : black;
+			font-size:150%;
+                        padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2: 0em;
+			border : 0px solid black;
+			width : auto;
+			vertical-align: top;
+			font-weight: bold;				
+		}
+		
+		.DRC_summary_header_col1 	
+		{		                       
+			text-align: right;
+                        width: auto;	
+		}
+
+		.DRC_summary_header_col2 	
+		{		
+			text-align: center;	
+		}
+
+		.DRC_summary_header_col3 	
+		{		
+			text-align: left;	
+		}
+
+
+		
+		.header_holder
+		{
+		Width = 100%;
+		border = 0px solid green;
+		padding = 0;
+		}
+		
+		
+		
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+                {
+			left:0;
+			top:0;
+			padding-top : 0.1em;			
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top
+
+		}
+		.front_matter {	
+			
+			margin-top: 5px;
+ 			margin-left: 0px;					 			
+ 			horizontal-align: left;
+		}
+				
+		
+		.front_matter_column1 {
+			width : 10em;	
+			text-align  : right;
+			padding-right:0.1em;
+			
+		}
+		
+		.front_matter_column2 {
+                        width: 0.1em;
+			align: center;
+			text-align : center;
+			margin-right  : 0.1em;	
+			margin-left   : 0.1em;
+		}
+		.front_matter_column3 {
+			width         : auto;  
+			text-align    : left;	
+			margin-right  : 0.5em;				
+		}
+		
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : right;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #EEEEE0 
+		}
+		tr.onmouseout_even { 
+			background-color : #F3F3E3   
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : lightYellow
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #008000 
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Users\Public\Documents\Altium\AD\Templates\AD-rgb_logo_223x64.gif
+		"><a href="dxpprocess://Client:SetupPreferences?Server=PCB|PageName=Reports" class="customize"><acronym title="dxpprocess://Client:SetupPreferences?Server=PCB|PageName=Reports">customize</acronym></a><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td Style="width:70%">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">13.8.2012 ã.</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">14:43:36</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">00:00:00</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3"><a href="file:///D:\AProj\DRL Voltage\DRLVoltage.PcbDoc" class="file"><acronym title="D:\AProj\DRL Voltage\DRLVoltage.PcbDoc">D:\AProj\DRL Voltage\DRLVoltage.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td Style="Width:30%">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings</td>
+<td class="DRC_summary_header_col2">:</td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations</td>
+<td class="DRC_summary_header_col2">:</td>
+<td class="DRC_summary_header_col3" style="color : red">76</td></tr>
+</table>
+</td>
+</table>
+<hr><a name="IDASAM3D"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAEBM3D">Net Antennae (Tolerance=0mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDAKBM3D">Silk to Silk (Clearance=0.254mm) (All),(All)</a></td>
+<td class="column2">3</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDALCM3D">Silkscreen Over Component Pads (Clearance=0.254mm) (All),(All)</a></td>
+<td class="column2">72</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDA5ON3D">Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">1</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAOPN3D">Hole To Hole Clearance (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDAUPN3D">Hole Size Constraint (Min=0.025mm) (Max=2.54mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDA0PN3D">Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDADYN3D">Width Constraint (Min=0.254mm) (Max=0.254mm) (Preferred=0.254mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAJYN3D">Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDAPYN3D">Clearance Constraint (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAVYN3D">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDA1YN3D">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">76</td>
+</tr>
+</table><br><hr><a name="IDAKBM3D"><table>
+<tr>
+<th style="text-align : left" colspan="2" class="rule">Silk to Silk (Clearance=0.254mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4129.921mil|Location2.X=4164.033mil|Location1.Y=2334.646mil|Location2.Y=2358.263mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4129.921mil|Location2.X=4164.033mil|Location1.Y=2334.646mil|Location2.Y=2358.263mil|Absolute=True">Text "R5" (105mm,59.4mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4171.26mil|Location2.X=4179.134mil|Location1.Y=2283.465mil|Location2.Y=2340.551mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4171.26mil|Location2.X=4179.134mil|Location1.Y=2283.465mil|Location2.Y=2340.551mil|Absolute=True">Track (106.05mm,58.1mm)(106.05mm,59.35mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4129.921mil|Location2.X=4164.033mil|Location1.Y=2334.646mil|Location2.Y=2358.263mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4129.921mil|Location2.X=4164.033mil|Location1.Y=2334.646mil|Location2.Y=2358.263mil|Absolute=True">Text "R5" (105mm,59.4mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4171.26mil|Location2.X=4179.134mil|Location1.Y=2352.362mil|Location2.Y=2409.449mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4171.26mil|Location2.X=4179.134mil|Location1.Y=2352.362mil|Location2.Y=2409.449mil|Absolute=True">Track (106.05mm,59.85mm)(106.05mm,61.1mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4098.879mil|Location2.X=4122.496mil|Location1.Y=2502.165mil|Location2.Y=2536.278mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4098.879mil|Location2.X=4122.496mil|Location1.Y=2502.165mil|Location2.Y=2536.278mil|Absolute=True">Text "R3" (104.611mm,63.655mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4116.142mil|Location2.X=4173.228mil|Location1.Y=2486.22mil|Location2.Y=2494.094mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4116.142mil|Location2.X=4173.228mil|Location1.Y=2486.22mil|Location2.Y=2494.094mil|Absolute=True">Track (104.65mm,63.25mm)(105.9mm,63.25mm)  Top Overlay</acronym></a></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br><a name="IDALCM3D"><table>
+<tr>
+<th style="text-align : left" colspan="2" class="rule">Silkscreen Over Component Pads (Clearance=0.254mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3944.882mil|Location2.X=3978.994mil|Location1.Y=2366.142mil|Location2.Y=2389.759mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3944.882mil|Location2.X=3978.994mil|Location1.Y=2366.142mil|Location2.Y=2389.759mil|Absolute=True">Text "R7" (100.3mm,60.2mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3970.409mil|Location2.X=4013.842mil|Location1.Y=2355.252mil|Location2.Y=2400.654mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3970.409mil|Location2.X=4013.842mil|Location1.Y=2355.252mil|Location2.Y=2400.654mil|Absolute=True">Pad R7-2(101.4mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4015.748mil|Location2.X=4023.622mil|Location1.Y=2344.488mil|Location2.Y=2411.417mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4015.748mil|Location2.X=4023.622mil|Location1.Y=2344.488mil|Location2.Y=2411.417mil|Absolute=True">Track (102.1mm,59.65mm)(102.1mm,61.15mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3970.409mil|Location2.X=4013.842mil|Location1.Y=2355.252mil|Location2.Y=2400.654mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3970.409mil|Location2.X=4013.842mil|Location1.Y=2355.252mil|Location2.Y=2400.654mil|Absolute=True">Pad R7-2(101.4mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3966.535mil|Location2.X=4023.622mil|Location1.Y=2344.488mil|Location2.Y=2352.362mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3966.535mil|Location2.X=4023.622mil|Location1.Y=2344.488mil|Location2.Y=2352.362mil|Absolute=True">Track (100.85mm,59.65mm)(102.1mm,59.65mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3970.409mil|Location2.X=4013.842mil|Location1.Y=2355.252mil|Location2.Y=2400.654mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3970.409mil|Location2.X=4013.842mil|Location1.Y=2355.252mil|Location2.Y=2400.654mil|Absolute=True">Pad R7-2(101.4mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3966.535mil|Location2.X=4023.622mil|Location1.Y=2403.543mil|Location2.Y=2411.417mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3966.535mil|Location2.X=4023.622mil|Location1.Y=2403.543mil|Location2.Y=2411.417mil|Absolute=True">Track (100.85mm,61.15mm)(102.1mm,61.15mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3970.409mil|Location2.X=4013.842mil|Location1.Y=2355.252mil|Location2.Y=2400.654mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3970.409mil|Location2.X=4013.842mil|Location1.Y=2355.252mil|Location2.Y=2400.654mil|Absolute=True">Pad R7-2(101.4mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3944.882mil|Location2.X=3978.994mil|Location1.Y=2366.142mil|Location2.Y=2389.759mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3944.882mil|Location2.X=3978.994mil|Location1.Y=2366.142mil|Location2.Y=2389.759mil|Absolute=True">Text "R7" (100.3mm,60.2mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3907.417mil|Location2.X=3950.85mil|Location1.Y=2355.252mil|Location2.Y=2400.654mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3907.417mil|Location2.X=3950.85mil|Location1.Y=2355.252mil|Location2.Y=2400.654mil|Absolute=True">Pad R7-1(99.8mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3897.638mil|Location2.X=3905.512mil|Location1.Y=2344.488mil|Location2.Y=2411.417mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3897.638mil|Location2.X=3905.512mil|Location1.Y=2344.488mil|Location2.Y=2411.417mil|Absolute=True">Track (99.1mm,59.65mm)(99.1mm,61.15mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3907.417mil|Location2.X=3950.85mil|Location1.Y=2355.252mil|Location2.Y=2400.654mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3907.417mil|Location2.X=3950.85mil|Location1.Y=2355.252mil|Location2.Y=2400.654mil|Absolute=True">Pad R7-1(99.8mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3897.638mil|Location2.X=3954.724mil|Location1.Y=2344.488mil|Location2.Y=2352.362mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3897.638mil|Location2.X=3954.724mil|Location1.Y=2344.488mil|Location2.Y=2352.362mil|Absolute=True">Track (99.1mm,59.65mm)(100.35mm,59.65mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3907.417mil|Location2.X=3950.85mil|Location1.Y=2355.252mil|Location2.Y=2400.654mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3907.417mil|Location2.X=3950.85mil|Location1.Y=2355.252mil|Location2.Y=2400.654mil|Absolute=True">Pad R7-1(99.8mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3897.638mil|Location2.X=3954.724mil|Location1.Y=2403.543mil|Location2.Y=2411.417mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3897.638mil|Location2.X=3954.724mil|Location1.Y=2403.543mil|Location2.Y=2411.417mil|Absolute=True">Track (99.1mm,61.15mm)(100.35mm,61.15mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3907.417mil|Location2.X=3950.85mil|Location1.Y=2355.252mil|Location2.Y=2400.654mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3907.417mil|Location2.X=3950.85mil|Location1.Y=2355.252mil|Location2.Y=2400.654mil|Absolute=True">Pad R7-1(99.8mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4112.205mil|Location2.X=4120.079mil|Location1.Y=2283.465mil|Location2.Y=2340.551mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4112.205mil|Location2.X=4120.079mil|Location1.Y=2283.465mil|Location2.Y=2340.551mil|Absolute=True">Track (104.55mm,58.1mm)(104.55mm,59.35mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4122.968mil|Location2.X=4168.37mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4122.968mil|Location2.X=4168.37mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True">Pad R5-2(105.3mm,58.8mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4171.26mil|Location2.X=4179.134mil|Location1.Y=2283.465mil|Location2.Y=2340.551mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4171.26mil|Location2.X=4179.134mil|Location1.Y=2283.465mil|Location2.Y=2340.551mil|Absolute=True">Track (106.05mm,58.1mm)(106.05mm,59.35mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4122.968mil|Location2.X=4168.37mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4122.968mil|Location2.X=4168.37mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True">Pad R5-2(105.3mm,58.8mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4112.205mil|Location2.X=4179.134mil|Location1.Y=2283.465mil|Location2.Y=2291.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4112.205mil|Location2.X=4179.134mil|Location1.Y=2283.465mil|Location2.Y=2291.339mil|Absolute=True">Track (104.55mm,58.1mm)(106.05mm,58.1mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4122.968mil|Location2.X=4168.37mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4122.968mil|Location2.X=4168.37mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True">Pad R5-2(105.3mm,58.8mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4129.921mil|Location2.X=4164.033mil|Location1.Y=2334.646mil|Location2.Y=2358.263mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4129.921mil|Location2.X=4164.033mil|Location1.Y=2334.646mil|Location2.Y=2358.263mil|Absolute=True">Text "R5" (105mm,59.4mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4122.968mil|Location2.X=4168.37mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4122.968mil|Location2.X=4168.37mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True">Pad R5-2(105.3mm,58.8mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4112.205mil|Location2.X=4120.079mil|Location1.Y=2352.362mil|Location2.Y=2409.449mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4112.205mil|Location2.X=4120.079mil|Location1.Y=2352.362mil|Location2.Y=2409.449mil|Absolute=True">Track (104.55mm,59.85mm)(104.55mm,61.1mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4122.968mil|Location2.X=4168.37mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4122.968mil|Location2.X=4168.37mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True">Pad R5-1(105.3mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4171.26mil|Location2.X=4179.134mil|Location1.Y=2352.362mil|Location2.Y=2409.449mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4171.26mil|Location2.X=4179.134mil|Location1.Y=2352.362mil|Location2.Y=2409.449mil|Absolute=True">Track (106.05mm,59.85mm)(106.05mm,61.1mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4122.968mil|Location2.X=4168.37mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4122.968mil|Location2.X=4168.37mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True">Pad R5-1(105.3mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4129.921mil|Location2.X=4164.033mil|Location1.Y=2334.646mil|Location2.Y=2358.263mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4129.921mil|Location2.X=4164.033mil|Location1.Y=2334.646mil|Location2.Y=2358.263mil|Absolute=True">Text "R5" (105mm,59.4mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4122.968mil|Location2.X=4168.37mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4122.968mil|Location2.X=4168.37mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True">Pad R5-1(105.3mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4112.205mil|Location2.X=4179.134mil|Location1.Y=2401.575mil|Location2.Y=2409.449mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4112.205mil|Location2.X=4179.134mil|Location1.Y=2401.575mil|Location2.Y=2409.449mil|Absolute=True">Track (104.55mm,61.1mm)(106.05mm,61.1mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4122.968mil|Location2.X=4168.37mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4122.968mil|Location2.X=4168.37mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True">Pad R5-1(105.3mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4047.244mil|Location2.X=4055.118mil|Location1.Y=2407.48mil|Location2.Y=2474.41mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4047.244mil|Location2.X=4055.118mil|Location1.Y=2407.48mil|Location2.Y=2474.41mil|Absolute=True">Track (102.9mm,61.25mm)(102.9mm,62.75mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4057.024mil|Location2.X=4100.457mil|Location1.Y=2418.244mil|Location2.Y=2463.646mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4057.024mil|Location2.X=4100.457mil|Location1.Y=2418.244mil|Location2.Y=2463.646mil|Absolute=True">Pad R1-2(103.6mm,62mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4097.12mil|Location2.X=4125.984mil|Location1.Y=2429.139mil|Location2.Y=2452.756mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4097.12mil|Location2.X=4125.984mil|Location1.Y=2429.139mil|Location2.Y=2452.756mil|Absolute=True">Text "R1" (104.7mm,62.2mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4057.024mil|Location2.X=4100.457mil|Location1.Y=2418.244mil|Location2.Y=2463.646mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4057.024mil|Location2.X=4100.457mil|Location1.Y=2418.244mil|Location2.Y=2463.646mil|Absolute=True">Pad R1-2(103.6mm,62mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4047.244mil|Location2.X=4104.331mil|Location1.Y=2466.535mil|Location2.Y=2474.41mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4047.244mil|Location2.X=4104.331mil|Location1.Y=2466.535mil|Location2.Y=2474.41mil|Absolute=True">Track (102.9mm,62.75mm)(104.15mm,62.75mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4057.024mil|Location2.X=4100.457mil|Location1.Y=2418.244mil|Location2.Y=2463.646mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4057.024mil|Location2.X=4100.457mil|Location1.Y=2418.244mil|Location2.Y=2463.646mil|Absolute=True">Pad R1-2(103.6mm,62mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4047.244mil|Location2.X=4104.331mil|Location1.Y=2407.48mil|Location2.Y=2415.354mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4047.244mil|Location2.X=4104.331mil|Location1.Y=2407.48mil|Location2.Y=2415.354mil|Absolute=True">Track (102.9mm,61.25mm)(104.15mm,61.25mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4057.024mil|Location2.X=4100.457mil|Location1.Y=2418.244mil|Location2.Y=2463.646mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4057.024mil|Location2.X=4100.457mil|Location1.Y=2418.244mil|Location2.Y=2463.646mil|Absolute=True">Pad R1-2(103.6mm,62mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4097.12mil|Location2.X=4125.984mil|Location1.Y=2429.139mil|Location2.Y=2452.756mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4097.12mil|Location2.X=4125.984mil|Location1.Y=2429.139mil|Location2.Y=2452.756mil|Absolute=True">Text "R1" (104.7mm,62.2mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4120.016mil|Location2.X=4163.449mil|Location1.Y=2418.244mil|Location2.Y=2463.646mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4120.016mil|Location2.X=4163.449mil|Location1.Y=2418.244mil|Location2.Y=2463.646mil|Absolute=True">Pad R1-1(105.2mm,62mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4165.354mil|Location2.X=4173.228mil|Location1.Y=2407.48mil|Location2.Y=2474.41mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4165.354mil|Location2.X=4173.228mil|Location1.Y=2407.48mil|Location2.Y=2474.41mil|Absolute=True">Track (105.9mm,61.25mm)(105.9mm,62.75mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4120.016mil|Location2.X=4163.449mil|Location1.Y=2418.244mil|Location2.Y=2463.646mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4120.016mil|Location2.X=4163.449mil|Location1.Y=2418.244mil|Location2.Y=2463.646mil|Absolute=True">Pad R1-1(105.2mm,62mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4116.142mil|Location2.X=4173.228mil|Location1.Y=2407.48mil|Location2.Y=2415.354mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4116.142mil|Location2.X=4173.228mil|Location1.Y=2407.48mil|Location2.Y=2415.354mil|Absolute=True">Track (104.65mm,61.25mm)(105.9mm,61.25mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4120.016mil|Location2.X=4163.449mil|Location1.Y=2418.244mil|Location2.Y=2463.646mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4120.016mil|Location2.X=4163.449mil|Location1.Y=2418.244mil|Location2.Y=2463.646mil|Absolute=True">Pad R1-1(105.2mm,62mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4116.142mil|Location2.X=4173.228mil|Location1.Y=2466.535mil|Location2.Y=2474.41mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4116.142mil|Location2.X=4173.228mil|Location1.Y=2466.535mil|Location2.Y=2474.41mil|Absolute=True">Track (104.65mm,62.75mm)(105.9mm,62.75mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4120.016mil|Location2.X=4163.449mil|Location1.Y=2418.244mil|Location2.Y=2463.646mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4120.016mil|Location2.X=4163.449mil|Location1.Y=2418.244mil|Location2.Y=2463.646mil|Absolute=True">Pad R1-1(105.2mm,62mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3958.827mil|Location2.X=3987.691mil|Location1.Y=2481.693mil|Location2.Y=2505.31mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3958.827mil|Location2.X=3987.691mil|Location1.Y=2481.693mil|Location2.Y=2505.31mil|Absolute=True">Text "Q1" (100.654mm,63.135mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3981.236mil|Location2.X=4038.449mil|Location1.Y=2472.378mil|Location2.Y=2515.811mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3981.236mil|Location2.X=4038.449mil|Location1.Y=2472.378mil|Location2.Y=2515.811mil|Absolute=True">Pad Q1-2(101.85mm,63.35mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3777.559mil|Location2.X=3834.646mil|Location1.Y=2454.724mil|Location2.Y=2462.598mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3777.559mil|Location2.X=3834.646mil|Location1.Y=2454.724mil|Location2.Y=2462.598mil|Absolute=True">Track (96.05mm,62.45mm)(97.3mm,62.45mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3781.433mil|Location2.X=3824.866mil|Location1.Y=2465.488mil|Location2.Y=2510.89mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3781.433mil|Location2.X=3824.866mil|Location1.Y=2465.488mil|Location2.Y=2510.89mil|Absolute=True">Pad R2-1(96.6mm,63.2mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3777.559mil|Location2.X=3834.646mil|Location1.Y=2513.78mil|Location2.Y=2521.654mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3777.559mil|Location2.X=3834.646mil|Location1.Y=2513.78mil|Location2.Y=2521.654mil|Absolute=True">Track (96.05mm,63.95mm)(97.3mm,63.95mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3781.433mil|Location2.X=3824.866mil|Location1.Y=2465.488mil|Location2.Y=2510.89mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3781.433mil|Location2.X=3824.866mil|Location1.Y=2465.488mil|Location2.Y=2510.89mil|Absolute=True">Pad R2-1(96.6mm,63.2mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3826.772mil|Location2.X=3834.646mil|Location1.Y=2454.724mil|Location2.Y=2521.654mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3826.772mil|Location2.X=3834.646mil|Location1.Y=2454.724mil|Location2.Y=2521.654mil|Absolute=True">Track (97.3mm,62.45mm)(97.3mm,63.95mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3781.433mil|Location2.X=3824.866mil|Location1.Y=2465.488mil|Location2.Y=2510.89mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3781.433mil|Location2.X=3824.866mil|Location1.Y=2465.488mil|Location2.Y=2510.89mil|Absolute=True">Pad R2-1(96.6mm,63.2mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3759.635mil|Location2.X=3783.252mil|Location1.Y=2471.37mil|Location2.Y=2505.482mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3759.635mil|Location2.X=3783.252mil|Location1.Y=2471.37mil|Location2.Y=2505.482mil|Absolute=True">Text "R2" (95.995mm,62.873mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3781.433mil|Location2.X=3824.866mil|Location1.Y=2465.488mil|Location2.Y=2510.89mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3781.433mil|Location2.X=3824.866mil|Location1.Y=2465.488mil|Location2.Y=2510.89mil|Absolute=True">Pad R2-1(96.6mm,63.2mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3708.661mil|Location2.X=3716.535mil|Location1.Y=2454.724mil|Location2.Y=2521.654mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3708.661mil|Location2.X=3716.535mil|Location1.Y=2454.724mil|Location2.Y=2521.654mil|Absolute=True">Track (94.3mm,62.45mm)(94.3mm,63.95mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3718.441mil|Location2.X=3761.874mil|Location1.Y=2465.488mil|Location2.Y=2510.89mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3718.441mil|Location2.X=3761.874mil|Location1.Y=2465.488mil|Location2.Y=2510.89mil|Absolute=True">Pad R2-2(95mm,63.2mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3708.661mil|Location2.X=3765.748mil|Location1.Y=2454.724mil|Location2.Y=2462.598mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3708.661mil|Location2.X=3765.748mil|Location1.Y=2454.724mil|Location2.Y=2462.598mil|Absolute=True">Track (94.3mm,62.45mm)(95.55mm,62.45mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3718.441mil|Location2.X=3761.874mil|Location1.Y=2465.488mil|Location2.Y=2510.89mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3718.441mil|Location2.X=3761.874mil|Location1.Y=2465.488mil|Location2.Y=2510.89mil|Absolute=True">Pad R2-2(95mm,63.2mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3708.661mil|Location2.X=3765.748mil|Location1.Y=2513.78mil|Location2.Y=2521.654mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3708.661mil|Location2.X=3765.748mil|Location1.Y=2513.78mil|Location2.Y=2521.654mil|Absolute=True">Track (94.3mm,63.95mm)(95.55mm,63.95mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3718.441mil|Location2.X=3761.874mil|Location1.Y=2465.488mil|Location2.Y=2510.89mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3718.441mil|Location2.X=3761.874mil|Location1.Y=2465.488mil|Location2.Y=2510.89mil|Absolute=True">Pad R2-2(95mm,63.2mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3759.635mil|Location2.X=3783.252mil|Location1.Y=2471.37mil|Location2.Y=2505.482mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3759.635mil|Location2.X=3783.252mil|Location1.Y=2471.37mil|Location2.Y=2505.482mil|Absolute=True">Text "R2" (95.995mm,62.873mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3718.441mil|Location2.X=3761.874mil|Location1.Y=2465.488mil|Location2.Y=2510.89mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3718.441mil|Location2.X=3761.874mil|Location1.Y=2465.488mil|Location2.Y=2510.89mil|Absolute=True">Pad R2-2(95mm,63.2mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4047.244mil|Location2.X=4055.118mil|Location1.Y=2486.22mil|Location2.Y=2553.15mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4047.244mil|Location2.X=4055.118mil|Location1.Y=2486.22mil|Location2.Y=2553.15mil|Absolute=True">Track (102.9mm,63.25mm)(102.9mm,64.75mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4057.024mil|Location2.X=4100.457mil|Location1.Y=2496.984mil|Location2.Y=2542.386mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4057.024mil|Location2.X=4100.457mil|Location1.Y=2496.984mil|Location2.Y=2542.386mil|Absolute=True">Pad R3-1(103.6mm,64mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4098.879mil|Location2.X=4122.496mil|Location1.Y=2502.165mil|Location2.Y=2536.278mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4098.879mil|Location2.X=4122.496mil|Location1.Y=2502.165mil|Location2.Y=2536.278mil|Absolute=True">Text "R3" (104.611mm,63.655mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4057.024mil|Location2.X=4100.457mil|Location1.Y=2496.984mil|Location2.Y=2542.386mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4057.024mil|Location2.X=4100.457mil|Location1.Y=2496.984mil|Location2.Y=2542.386mil|Absolute=True">Pad R3-1(103.6mm,64mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4047.244mil|Location2.X=4104.331mil|Location1.Y=2486.22mil|Location2.Y=2494.094mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4047.244mil|Location2.X=4104.331mil|Location1.Y=2486.22mil|Location2.Y=2494.094mil|Absolute=True">Track (102.9mm,63.25mm)(104.15mm,63.25mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4057.024mil|Location2.X=4100.457mil|Location1.Y=2496.984mil|Location2.Y=2542.386mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4057.024mil|Location2.X=4100.457mil|Location1.Y=2496.984mil|Location2.Y=2542.386mil|Absolute=True">Pad R3-1(103.6mm,64mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4047.244mil|Location2.X=4104.331mil|Location1.Y=2545.276mil|Location2.Y=2553.15mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4047.244mil|Location2.X=4104.331mil|Location1.Y=2545.276mil|Location2.Y=2553.15mil|Absolute=True">Track (102.9mm,64.75mm)(104.15mm,64.75mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4057.024mil|Location2.X=4100.457mil|Location1.Y=2496.984mil|Location2.Y=2542.386mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4057.024mil|Location2.X=4100.457mil|Location1.Y=2496.984mil|Location2.Y=2542.386mil|Absolute=True">Pad R3-1(103.6mm,64mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4098.879mil|Location2.X=4122.496mil|Location1.Y=2502.165mil|Location2.Y=2536.278mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4098.879mil|Location2.X=4122.496mil|Location1.Y=2502.165mil|Location2.Y=2536.278mil|Absolute=True">Text "R3" (104.611mm,63.655mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4120.016mil|Location2.X=4163.449mil|Location1.Y=2496.984mil|Location2.Y=2542.386mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4120.016mil|Location2.X=4163.449mil|Location1.Y=2496.984mil|Location2.Y=2542.386mil|Absolute=True">Pad R3-2(105.2mm,64mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4165.354mil|Location2.X=4173.228mil|Location1.Y=2486.22mil|Location2.Y=2553.15mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4165.354mil|Location2.X=4173.228mil|Location1.Y=2486.22mil|Location2.Y=2553.15mil|Absolute=True">Track (105.9mm,63.25mm)(105.9mm,64.75mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4120.016mil|Location2.X=4163.449mil|Location1.Y=2496.984mil|Location2.Y=2542.386mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4120.016mil|Location2.X=4163.449mil|Location1.Y=2496.984mil|Location2.Y=2542.386mil|Absolute=True">Pad R3-2(105.2mm,64mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4116.142mil|Location2.X=4173.228mil|Location1.Y=2545.276mil|Location2.Y=2553.15mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4116.142mil|Location2.X=4173.228mil|Location1.Y=2545.276mil|Location2.Y=2553.15mil|Absolute=True">Track (104.65mm,64.75mm)(105.9mm,64.75mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4120.016mil|Location2.X=4163.449mil|Location1.Y=2496.984mil|Location2.Y=2542.386mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4120.016mil|Location2.X=4163.449mil|Location1.Y=2496.984mil|Location2.Y=2542.386mil|Absolute=True">Pad R3-2(105.2mm,64mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4116.142mil|Location2.X=4173.228mil|Location1.Y=2486.22mil|Location2.Y=2494.094mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4116.142mil|Location2.X=4173.228mil|Location1.Y=2486.22mil|Location2.Y=2494.094mil|Absolute=True">Track (104.65mm,63.25mm)(105.9mm,63.25mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4120.016mil|Location2.X=4163.449mil|Location1.Y=2496.984mil|Location2.Y=2542.386mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4120.016mil|Location2.X=4163.449mil|Location1.Y=2496.984mil|Location2.Y=2542.386mil|Absolute=True">Pad R3-2(105.2mm,64mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4045.276mil|Location2.X=4053.15mil|Location1.Y=2283.465mil|Location2.Y=2340.551mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4045.276mil|Location2.X=4053.15mil|Location1.Y=2283.465mil|Location2.Y=2340.551mil|Absolute=True">Track (102.85mm,58.1mm)(102.85mm,59.35mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4056.039mil|Location2.X=4101.441mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4056.039mil|Location2.X=4101.441mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True">Pad C1-2(103.6mm,58.8mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4104.331mil|Location2.X=4112.205mil|Location1.Y=2283.465mil|Location2.Y=2340.551mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4104.331mil|Location2.X=4112.205mil|Location1.Y=2283.465mil|Location2.Y=2340.551mil|Absolute=True">Track (104.35mm,58.1mm)(104.35mm,59.35mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4056.039mil|Location2.X=4101.441mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4056.039mil|Location2.X=4101.441mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True">Pad C1-2(103.6mm,58.8mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4045.276mil|Location2.X=4112.205mil|Location1.Y=2283.465mil|Location2.Y=2291.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4045.276mil|Location2.X=4112.205mil|Location1.Y=2283.465mil|Location2.Y=2291.339mil|Absolute=True">Track (102.85mm,58.1mm)(104.35mm,58.1mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4056.039mil|Location2.X=4101.441mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4056.039mil|Location2.X=4101.441mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True">Pad C1-2(103.6mm,58.8mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4066.911mil|Location2.X=4090.528mil|Location1.Y=2332.331mil|Location2.Y=2361.195mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4066.911mil|Location2.X=4090.528mil|Location1.Y=2332.331mil|Location2.Y=2361.195mil|Absolute=True">Text "C1" (103.799mm,59.341mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4056.039mil|Location2.X=4101.441mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4056.039mil|Location2.X=4101.441mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True">Pad C1-2(103.6mm,58.8mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4045.276mil|Location2.X=4053.15mil|Location1.Y=2352.362mil|Location2.Y=2409.449mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4045.276mil|Location2.X=4053.15mil|Location1.Y=2352.362mil|Location2.Y=2409.449mil|Absolute=True">Track (102.85mm,59.85mm)(102.85mm,61.1mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4056.039mil|Location2.X=4101.441mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4056.039mil|Location2.X=4101.441mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True">Pad C1-1(103.6mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4104.331mil|Location2.X=4112.205mil|Location1.Y=2352.362mil|Location2.Y=2409.449mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4104.331mil|Location2.X=4112.205mil|Location1.Y=2352.362mil|Location2.Y=2409.449mil|Absolute=True">Track (104.35mm,59.85mm)(104.35mm,61.1mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4056.039mil|Location2.X=4101.441mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4056.039mil|Location2.X=4101.441mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True">Pad C1-1(103.6mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4066.911mil|Location2.X=4090.528mil|Location1.Y=2332.331mil|Location2.Y=2361.195mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4066.911mil|Location2.X=4090.528mil|Location1.Y=2332.331mil|Location2.Y=2361.195mil|Absolute=True">Text "C1" (103.799mm,59.341mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4056.039mil|Location2.X=4101.441mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4056.039mil|Location2.X=4101.441mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True">Pad C1-1(103.6mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4045.276mil|Location2.X=4112.205mil|Location1.Y=2401.575mil|Location2.Y=2409.449mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4045.276mil|Location2.X=4112.205mil|Location1.Y=2401.575mil|Location2.Y=2409.449mil|Absolute=True">Track (102.85mm,61.1mm)(104.35mm,61.1mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4056.039mil|Location2.X=4101.441mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4056.039mil|Location2.X=4101.441mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True">Pad C1-1(103.6mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4179.134mil|Location2.X=4187.008mil|Location1.Y=2409.449mil|Location2.Y=2466.535mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4179.134mil|Location2.X=4187.008mil|Location1.Y=2409.449mil|Location2.Y=2466.535mil|Absolute=True">Track (106.25mm,61.3mm)(106.25mm,62.55mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2419.228mil|Location2.Y=2462.661mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2419.228mil|Location2.Y=2462.661mil|Absolute=True">Pad R4-2(107mm,62mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4195.762mil|Location2.X=4229.874mil|Location1.Y=2460.438mil|Location2.Y=2484.055mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4195.762mil|Location2.X=4229.874mil|Location1.Y=2460.438mil|Location2.Y=2484.055mil|Absolute=True">Text "R4" (107.339mm,62.995mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2419.228mil|Location2.Y=2462.661mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2419.228mil|Location2.Y=2462.661mil|Absolute=True">Pad R4-2(107mm,62mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4238.189mil|Location2.X=4246.063mil|Location1.Y=2409.449mil|Location2.Y=2466.535mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4238.189mil|Location2.X=4246.063mil|Location1.Y=2409.449mil|Location2.Y=2466.535mil|Absolute=True">Track (107.75mm,61.3mm)(107.75mm,62.55mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2419.228mil|Location2.Y=2462.661mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2419.228mil|Location2.Y=2462.661mil|Absolute=True">Pad R4-2(107mm,62mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4179.134mil|Location2.X=4246.063mil|Location1.Y=2409.449mil|Location2.Y=2417.323mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4179.134mil|Location2.X=4246.063mil|Location1.Y=2409.449mil|Location2.Y=2417.323mil|Absolute=True">Track (106.25mm,61.3mm)(107.75mm,61.3mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2419.228mil|Location2.Y=2462.661mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2419.228mil|Location2.Y=2462.661mil|Absolute=True">Pad R4-2(107mm,62mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4195.762mil|Location2.X=4229.874mil|Location1.Y=2460.438mil|Location2.Y=2484.055mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4195.762mil|Location2.X=4229.874mil|Location1.Y=2460.438mil|Location2.Y=2484.055mil|Absolute=True">Text "R4" (107.339mm,62.995mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2482.22mil|Location2.Y=2525.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2482.22mil|Location2.Y=2525.653mil|Absolute=True">Pad R4-1(107mm,63.6mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4179.134mil|Location2.X=4187.008mil|Location1.Y=2478.346mil|Location2.Y=2535.433mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4179.134mil|Location2.X=4187.008mil|Location1.Y=2478.346mil|Location2.Y=2535.433mil|Absolute=True">Track (106.25mm,63.05mm)(106.25mm,64.3mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2482.22mil|Location2.Y=2525.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2482.22mil|Location2.Y=2525.653mil|Absolute=True">Pad R4-1(107mm,63.6mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4238.189mil|Location2.X=4246.063mil|Location1.Y=2478.346mil|Location2.Y=2535.433mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4238.189mil|Location2.X=4246.063mil|Location1.Y=2478.346mil|Location2.Y=2535.433mil|Absolute=True">Track (107.75mm,63.05mm)(107.75mm,64.3mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2482.22mil|Location2.Y=2525.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2482.22mil|Location2.Y=2525.653mil|Absolute=True">Pad R4-1(107mm,63.6mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4179.134mil|Location2.X=4246.063mil|Location1.Y=2527.559mil|Location2.Y=2535.433mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4179.134mil|Location2.X=4246.063mil|Location1.Y=2527.559mil|Location2.Y=2535.433mil|Absolute=True">Track (106.25mm,64.3mm)(107.75mm,64.3mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2482.22mil|Location2.Y=2525.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2482.22mil|Location2.Y=2525.653mil|Absolute=True">Pad R4-1(107mm,63.6mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4195.378mil|Location2.X=4229.49mil|Location1.Y=2334.331mil|Location2.Y=2357.948mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4195.378mil|Location2.X=4229.49mil|Location1.Y=2334.331mil|Location2.Y=2357.948mil|Absolute=True">Text "R6" (106.663mm,59.392mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True">Pad R6-2(107mm,58.8mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4179.134mil|Location2.X=4187.008mil|Location1.Y=2283.465mil|Location2.Y=2340.551mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4179.134mil|Location2.X=4187.008mil|Location1.Y=2283.465mil|Location2.Y=2340.551mil|Absolute=True">Track (106.25mm,58.1mm)(106.25mm,59.35mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True">Pad R6-2(107mm,58.8mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4238.189mil|Location2.X=4246.063mil|Location1.Y=2283.465mil|Location2.Y=2340.551mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4238.189mil|Location2.X=4246.063mil|Location1.Y=2283.465mil|Location2.Y=2340.551mil|Absolute=True">Track (107.75mm,58.1mm)(107.75mm,59.35mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True">Pad R6-2(107mm,58.8mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4179.134mil|Location2.X=4246.063mil|Location1.Y=2283.465mil|Location2.Y=2291.339mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4179.134mil|Location2.X=4246.063mil|Location1.Y=2283.465mil|Location2.Y=2291.339mil|Absolute=True">Track (106.25mm,58.1mm)(107.75mm,58.1mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2293.244mil|Location2.Y=2336.677mil|Absolute=True">Pad R6-2(107mm,58.8mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4195.378mil|Location2.X=4229.49mil|Location1.Y=2334.331mil|Location2.Y=2357.948mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4195.378mil|Location2.X=4229.49mil|Location1.Y=2334.331mil|Location2.Y=2357.948mil|Absolute=True">Text "R6" (106.663mm,59.392mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True">Pad R6-1(107mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4179.134mil|Location2.X=4187.008mil|Location1.Y=2352.362mil|Location2.Y=2409.449mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4179.134mil|Location2.X=4187.008mil|Location1.Y=2352.362mil|Location2.Y=2409.449mil|Absolute=True">Track (106.25mm,59.85mm)(106.25mm,61.1mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True">Pad R6-1(107mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4238.189mil|Location2.X=4246.063mil|Location1.Y=2352.362mil|Location2.Y=2409.449mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4238.189mil|Location2.X=4246.063mil|Location1.Y=2352.362mil|Location2.Y=2409.449mil|Absolute=True">Track (107.75mm,59.85mm)(107.75mm,61.1mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True">Pad R6-1(107mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4179.134mil|Location2.X=4246.063mil|Location1.Y=2401.575mil|Location2.Y=2409.449mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4179.134mil|Location2.X=4246.063mil|Location1.Y=2401.575mil|Location2.Y=2409.449mil|Absolute=True">Track (106.25mm,61.1mm)(107.75mm,61.1mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4189.898mil|Location2.X=4235.299mil|Location1.Y=2356.236mil|Location2.Y=2399.669mil|Absolute=True">Pad R6-1(107mm,60.4mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3762.844mil|Location2.X=3791.709mil|Location1.Y=2353.454mil|Location2.Y=2377.071mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3762.844mil|Location2.X=3791.709mil|Location1.Y=2353.454mil|Location2.Y=2377.071mil|Absolute=True">Text "U1" (96.209mm,60.278mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3755.843mil|Location2.X=3799.276mil|Location1.Y=2300.134mil|Location2.Y=2357.346mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3755.843mil|Location2.X=3799.276mil|Location1.Y=2300.134mil|Location2.Y=2357.346mil|Absolute=True">Pad U1-2(95.95mm,59.15mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3661.417mil|Location2.X=4291.338mil|Location1.Y=2055.118mil|Location2.Y=2062.992mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3661.417mil|Location2.X=4291.338mil|Location1.Y=2055.118mil|Location2.Y=2062.992mil|Absolute=True">Track (93.1mm,52.3mm)(108.9mm,52.3mm)  Bottom Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4159.386mil|Location2.X=4265.811mil|Location1.Y=2068.835mil|Location2.Y=2175.26mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4159.386mil|Location2.X=4265.811mil|Location1.Y=2068.835mil|Location2.Y=2175.26mil|Absolute=True">Pad K1-3(107mm,53.9mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4165.354mil|Location2.X=4173.228mil|Location1.Y=2486.22mil|Location2.Y=2553.15mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4165.354mil|Location2.X=4173.228mil|Location1.Y=2486.22mil|Location2.Y=2553.15mil|Absolute=True">Track (105.9mm,63.25mm)(105.9mm,64.75mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4159.386mil|Location2.X=4265.811mil|Location1.Y=2541.276mil|Location2.Y=2647.701mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4159.386mil|Location2.X=4265.811mil|Location1.Y=2541.276mil|Location2.Y=2647.701mil|Absolute=True">Pad K1-4(107mm,65.9mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4116.142mil|Location2.X=4173.228mil|Location1.Y=2545.276mil|Location2.Y=2553.15mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4116.142mil|Location2.X=4173.228mil|Location1.Y=2545.276mil|Location2.Y=2553.15mil|Absolute=True">Track (104.65mm,64.75mm)(105.9mm,64.75mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4159.386mil|Location2.X=4265.811mil|Location1.Y=2541.276mil|Location2.Y=2647.701mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4159.386mil|Location2.X=4265.811mil|Location1.Y=2541.276mil|Location2.Y=2647.701mil|Absolute=True">Pad K1-4(107mm,65.9mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4179.134mil|Location2.X=4246.063mil|Location1.Y=2527.559mil|Location2.Y=2535.433mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4179.134mil|Location2.X=4246.063mil|Location1.Y=2527.559mil|Location2.Y=2535.433mil|Absolute=True">Track (106.25mm,64.3mm)(107.75mm,64.3mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4159.386mil|Location2.X=4265.811mil|Location1.Y=2541.276mil|Location2.Y=2647.701mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4159.386mil|Location2.X=4265.811mil|Location1.Y=2541.276mil|Location2.Y=2647.701mil|Absolute=True">Pad K1-4(107mm,65.9mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3661.417mil|Location2.X=4291.338mil|Location1.Y=2055.118mil|Location2.Y=2062.992mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3661.417mil|Location2.X=4291.338mil|Location1.Y=2055.118mil|Location2.Y=2062.992mil|Absolute=True">Track (93.1mm,52.3mm)(108.9mm,52.3mm)  Bottom Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3686.945mil|Location2.X=3793.37mil|Location1.Y=2068.835mil|Location2.Y=2175.26mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3686.945mil|Location2.X=3793.37mil|Location1.Y=2068.835mil|Location2.Y=2175.26mil|Absolute=True">Pad K1-2(95mm,53.9mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3661.417mil|Location2.X=4291.339mil|Location1.Y=2767.717mil|Location2.Y=2775.591mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3661.417mil|Location2.X=4291.339mil|Location1.Y=2767.717mil|Location2.Y=2775.591mil|Absolute=True">Track (93.1mm,70.4mm)(108.9mm,70.4mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3923.165mil|Location2.X=4029.59mil|Location1.Y=2719.425mil|Location2.Y=2825.85mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3923.165mil|Location2.X=4029.59mil|Location1.Y=2719.425mil|Location2.Y=2825.85mil|Absolute=True">Pad K2-1(101mm,70.425mm)  Multi-Layer</acronym></a></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br><a name="IDA5ON3D"><table>
+<tr>
+<th style="text-align : left" colspan="2" class="rule">Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3686.945mil|Location2.X=3793.37mil|Location1.Y=2616.079mil|Location2.Y=2722.504mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3686.945mil|Location2.X=3793.37mil|Location1.Y=2616.079mil|Location2.Y=2722.504mil|Absolute=True">Pad K2-4(95mm,67.8mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3803.087mil|Location2.X=4086.677mil|Location1.Y=2621.984mil|Location2.Y=2826.835mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\AProj\DRL Voltage\DRLVoltage.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3803.087mil|Location2.X=4086.677mil|Location1.Y=2621.984mil|Location2.Y=2826.835mil|Absolute=True">Pad Free-1(100.2mm,69.2mm)  Top Layer</acronym></a></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br></body>
+</html>

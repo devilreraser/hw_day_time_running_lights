@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: Day10F206.PCBDOC   10.8.2012 ã.  10:59:57
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII Plated RoundHoles File : Day10F206-Plated.TXT
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        0.8mm (31.496mil)        Round          5                10.15 mm (0.40 Inch)
+T2        1.5mm (59.055mil)        Round          15               119.32 mm (4.70 Inch)
+T3        2mm (78.74mil)           Round          9                126.41 mm (4.98 Inch)
+---------------------------------------------------------------------------
+Totals                                            29               255.88 mm (10.07 Inch)
+
+Total Processing Time (hh:mm:ss) : 00:00:00

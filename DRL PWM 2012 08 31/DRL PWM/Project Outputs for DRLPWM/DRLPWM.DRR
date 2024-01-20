@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: DRLPWM.PcbDoc   31.8.2012 ã.  02:14:35
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : DRLPWM.TXT
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        0.8mm (31.496mil)        Round          5                10.15 mm (0.40 Inch)
+T2        1.2mm (47.244mil)        Round          10               22.86 mm (0.90 Inch)
+T3        2mm (78.74mil)           Round          8                71.13 mm (2.80 Inch)
+---------------------------------------------------------------------------
+Totals                                            23               104.14 mm (4.10 Inch)
+
+Total Processing Time (hh:mm:ss) : 00:00:00

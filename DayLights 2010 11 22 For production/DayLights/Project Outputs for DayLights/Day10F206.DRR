@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: Day10F206.PCBDOC   22.11.2010 ã.  09:42:08
+---------------------------------------------------------------------------
+
+
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII File : NCDrillOutput.TXT
+EIA File   : NCDrillOutput.DRL
+
+Tool         Hole Size          Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        0.76mm (29.921mil)       3                54.95 mm (2.16 Inch)
+T2        0.9mm (35.433mil)        4                69.29 mm (2.73 Inch)
+T3        1.2mm (47.244mil)        15               151.60 mm (5.97 Inch)
+T4        1.5mm (59.055mil)        4                48.08 mm (1.89 Inch)
+T5        2mm (78.74mil)           10               180.17 mm (7.09 Inch)
+---------------------------------------------------------------------------
+Totals                             36               504.09 mm (19.85 Inch)
+
+Total Processing Time : 00:00:05

@@ -1,0 +1,16 @@
+Output: Gerber Files
+Type  : Gerber
+From  : Project [DRL.PRJPCB]
+   Generated File[DRL.GTL]
+   Generated File[DRL.GBL]
+   Generated File[DRL.GTS]
+   Generated File[DRL.GBS]
+   Generated File[DRL.GKO]
+   Generated File[DRL.RUL]
+   Generated File[DRL.REP]
+
+
+Files Generated   : 7
+Documents Printed : 0
+
+Finished Output Generation At 12:40:09 On 27.12.2010 ã.

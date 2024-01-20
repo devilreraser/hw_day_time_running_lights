@@ -1,0 +1,12 @@
+Output: NC Drill Files
+Type  : NC Drill
+From  : Project [DRLTransistor.PrjPCB]
+   Generated File[DRLTransistor.TXT]
+   Generated File[DRLTransistor.LDP]
+   Generated File[DRLTransistor.DRR]
+
+
+Files Generated   : 3
+Documents Printed : 0
+
+Finished Output Generation At 14:08:30 On 2.9.2012 ã.

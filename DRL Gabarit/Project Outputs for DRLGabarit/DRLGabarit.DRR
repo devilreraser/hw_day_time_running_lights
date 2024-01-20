@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: DRLGabarit.PcbDoc   22.8.2012 ã.  22:25:50
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : DRLGabarit.TXT
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        1.5mm (59.055mil)        Round          10               96.43 mm (3.80 Inch)
+T2        2mm (78.74mil)           Round          8                75.92 mm (2.99 Inch)
+---------------------------------------------------------------------------
+Totals                                            18               172.35 mm (6.79 Inch)
+
+Total Processing Time (hh:mm:ss) : 00:00:00

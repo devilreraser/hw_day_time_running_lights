@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: DRLDelay.PcbDoc   16.9.2012 ã.  22:14:36
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : DRLDelay.TXT
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        1.8mm (70.866mil)        Round          3                10.90 mm (0.43 Inch)
+T2        2mm (78.74mil)           Round          3                22.30 mm (0.88 Inch)
+---------------------------------------------------------------------------
+Totals                                            6                33.20 mm (1.31 Inch)
+
+Total Processing Time (hh:mm:ss) : 00:00:00

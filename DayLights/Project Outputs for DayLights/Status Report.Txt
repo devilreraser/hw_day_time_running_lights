@@ -1,0 +1,15 @@
+Output: Gerber Files
+Type  : Gerber
+From  : Variant [[No Variations]] of Project [DayLights.PRJPCB]
+   Generated File[Day10F206.GTL]
+   Generated File[Day10F206.GTS]
+   Generated File[Day10F206.GKO]
+   Generated File[Day10F206.RUL]
+   Generated File[Day10F206.EXTREP]
+   Generated File[Day10F206.REP]
+
+
+Files Generated   : 6
+Documents Printed : 0
+
+Finished Output Generation At 11:00:57 On 10.8.2012 ã.
